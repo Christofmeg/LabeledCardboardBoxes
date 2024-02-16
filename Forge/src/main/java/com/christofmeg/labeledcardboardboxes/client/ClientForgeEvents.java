@@ -1,0 +1,113 @@
+package com.christofmeg.labeledcardboardboxes.client;
+
+import com.christofmeg.labeledcardboardboxes.LabeledCardboardBoxes;
+import mekanism.common.MekanismLang;
+import mekanism.common.block.BlockCardboardBox;
+import mekanism.common.item.block.ItemBlockCardboardBox;
+import net.minecraft.ChatFormatting;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.Tag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.SpawnerBlock;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.event.entity.player.ItemTooltipEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.ModList;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.registries.ForgeRegistries;
+
+@SuppressWarnings("unused")
+@Mod.EventBusSubscriber(value = Dist.CLIENT, modid = LabeledCardboardBoxes.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
+public class ClientForgeEvents {
+
+    @SubscribeEvent
+    public static void onItemTooltip(ItemTooltipEvent event) {
+        if (ModList.get().isLoaded("mekanism")) {
+            Item item = ForgeRegistries.ITEMS.getValue(ResourceLocation.tryParse("mekanism:cardboard_box"));
+            ItemStack stack = event.getItemStack();
+            if (stack.getItem() == item) {
+                if (stack.hasTag()) {
+                    Player player = event.getEntity();
+                    if (player != null) {
+                        if (item instanceof ItemBlockCardboardBox cardboardBox) {
+                            Level level = player.level();
+                            BlockCardboardBox.BlockData data = cardboardBox.getBlockData(level, stack);
+                            if (data != null) {
+                                Block block = data.blockState.getBlock();
+                                if (block instanceof SpawnerBlock) {
+                                    if (data.tileTag != null) {
+                                        Tag tag = data.tileTag.getCompound("SpawnData").getCompound("entity").get("id");
+                                        if (tag != null) {
+                                            EntityType<?> type = ForgeRegistries.ENTITY_TYPES.getValue(ResourceLocation.tryParse(tag.toString().replace("\"", "")));
+                                            if (type != null) {
+                                                ResourceLocation entityLocation = ForgeRegistries.ENTITY_TYPES.getKey(type);
+                                                if (entityLocation != null) {
+                                                    CompoundTag tileTag = cardboardBox.getBlockData(level, stack).tileTag;
+                                                    if (tileTag != null) {
+                                                        String blockString = tileTag.getString("id").replace("\"", "");
+                                                        ResourceLocation location = ResourceLocation.tryParse(blockString);
+                                                        if (location != null) {
+
+                                                            event.getToolTip().remove(MekanismLang.BLOCK.translate(data.blockState.getBlock()));
+                                                            event.getToolTip().add(MekanismLang.BLOCK.translate(data.blockState.getBlock())
+                                                                    .append(Component.literal(" ("))
+                                                                    .append(Component.translatable(capitaliseAllWords(entityLocation.toShortLanguageKey().replace("_", " "))))
+                                                                    .append(Component.literal(")"))
+                                                                    .withStyle(ChatFormatting.WHITE)
+                                                            );
+
+                                                            event.getToolTip().remove(MekanismLang.BLOCK_ENTITY.translate(tileTag.getString("id")));
+                                                            event.getToolTip().add(MekanismLang.BLOCK_ENTITY.translate(tileTag.getString("id")));
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    public static String capitaliseAllWords( String str )
+    {
+        if ( str == null )
+        {
+            return null;
+        }
+        int sz = str.length();
+        StringBuilder buffer = new StringBuilder( sz );
+        boolean space = true;
+        for ( int i = 0; i < sz; i++ )
+        {
+            char ch = str.charAt( i );
+            if ( Character.isWhitespace( ch ) )
+            {
+                buffer.append( ch );
+                space = true;
+            }
+            else if ( space )
+            {
+                buffer.append( Character.toTitleCase( ch ) );
+                space = false;
+            }
+            else
+            {
+                buffer.append( ch );
+            }
+        }
+        return buffer.toString();
+    }
+
+}

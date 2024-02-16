@@ -1,2 +1,4 @@
 # Labeled Cardboard Boxes
- Mekanism Cardboard Boxes + Jade = this. This mod labels Cardboard Boxes with what Block and Block Entity is inside. Special support for spawners.
+ Mekanism Cardboard Boxes + Jade = this. 
+ This mod shows what Block and Block Entities are inside cardboard boxes. 
+ Special support for spawners.
