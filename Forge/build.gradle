@@ -136,5 +136,5 @@ modrinth {
         required.project "jade"
         required.project "mekanism"
     }
-    loaders = "Forge, NeoForge".split(",") as List<String>
+    loaders = "forge,neoforge".split(",") as List<String>
 }
