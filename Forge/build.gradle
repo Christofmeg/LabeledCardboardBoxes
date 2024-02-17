@@ -11,7 +11,7 @@ plugins {
 archivesBaseName = "${mod_id}-forge-${supported_versions}"
 
 minecraft {
-    mappings channel: 'official', version: '1.19.2'
+    mappings channel: 'official', version: '1.18.2'
 
     runs {
         client {
@@ -93,9 +93,9 @@ dependencies {
         implementation fg.deobf("curse.maven:configured-457570:${forge_configured_version}")
     }
 
-    implementation fg.deobf("curse.maven:jade-324717:4800904")
+    implementation fg.deobf("curse.maven:jade-324717:5079263")
 //    implementation fg.deobf("curse.maven:item-nbt-viewer-514135:4578522")
-    implementation fg.deobf("curse.maven:mekanism-268560:4644795")
+    implementation fg.deobf("curse.maven:mekanism-268560:3875976")
 
 //    implementation fg.deobf("curse.maven:applied-energistics-2-223794:5032144")
 }

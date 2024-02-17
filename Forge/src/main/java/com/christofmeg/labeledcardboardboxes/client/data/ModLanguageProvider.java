@@ -14,7 +14,6 @@ public class ModLanguageProvider extends LanguageProvider {
     protected void addTranslations() {
         String locale = this.getName().replace("Languages: ", "");
         if (locale.equals("en_us")) {
-            add("config.jade.plugin_" + LabeledCardboardBoxes.MOD_ID + ".cardboard_box", "Cardboard Box");
             add("jade." + LabeledCardboardBoxes.MOD_ID + ".cardboard_box.type", "Type: %1$s");
         }
     }

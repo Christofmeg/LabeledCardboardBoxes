@@ -7,7 +7,8 @@ import mekanism.common.item.block.ItemBlockCardboardBox;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
-import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.player.Player;
@@ -33,7 +34,7 @@ public class ClientForgeEvents {
             ItemStack stack = event.getItemStack();
             if (stack.getItem() == item) {
                 if (stack.hasTag()) {
-                    Player player = event.getEntity();
+                    Player player = event.getPlayer();
                     if (player != null) {
                         if (item instanceof ItemBlockCardboardBox cardboardBox) {
                             BlockCardboardBox.BlockData data = cardboardBox.getBlockData(stack);
@@ -43,9 +44,9 @@ public class ClientForgeEvents {
                                     if (data.tileTag != null) {
                                         Tag tag = data.tileTag.getCompound("SpawnData").getCompound("entity").get("id");
                                         if (tag != null) {
-                                            EntityType<?> type = ForgeRegistries.ENTITY_TYPES.getValue(ResourceLocation.tryParse(tag.toString().replace("\"", "")));
+                                            EntityType<?> type = ForgeRegistries.ENTITIES.getValue(ResourceLocation.tryParse(tag.toString().replace("\"", "")));
                                             if (type != null) {
-                                                ResourceLocation entityLocation = ForgeRegistries.ENTITY_TYPES.getKey(type);
+                                                ResourceLocation entityLocation = ForgeRegistries.ENTITIES.getKey(type);
                                                 if (entityLocation != null) {
                                                     CompoundTag tileTag = cardboardBox.getBlockData(stack).tileTag;
                                                     if (tileTag != null) {
@@ -55,9 +56,9 @@ public class ClientForgeEvents {
 
                                                             event.getToolTip().remove(MekanismLang.BLOCK.translate(data.blockState.getBlock()));
                                                             event.getToolTip().add(MekanismLang.BLOCK.translate(data.blockState.getBlock())
-                                                                    .append(Component.literal(" ("))
-                                                                    .append(Component.translatable(capitaliseAllWords(entityLocation.toShortLanguageKey().replace("_", " "))))
-                                                                    .append(Component.literal(")"))
+                                                                    .append(new TextComponent(" ("))        //entityLocation.toShortLanguageKey()
+                                                                    .append(new TranslatableComponent(capitaliseAllWords(entityLocation.getPath().replace("_", " "))))
+                                                                    .append(new TextComponent(")"))
                                                                     .withStyle(ChatFormatting.WHITE)
                                                             );
 

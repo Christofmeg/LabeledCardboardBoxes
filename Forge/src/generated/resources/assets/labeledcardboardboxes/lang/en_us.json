@@ -1,4 +1,3 @@
 {
-  "config.jade.plugin_labeledcardboardboxes.cardboard_box": "Cardboard Box",
   "jade.labeledcardboardboxes.cardboard_box.type": "Type: %1$s"
 }
