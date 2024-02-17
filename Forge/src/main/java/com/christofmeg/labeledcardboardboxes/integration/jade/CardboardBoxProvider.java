@@ -7,12 +7,15 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SpawnerBlock;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.phys.Vec2;
 import net.minecraftforge.registries.ForgeRegistries;
 import snownee.jade.api.BlockAccessor;
@@ -23,7 +26,7 @@ import snownee.jade.api.config.IPluginConfig;
 import snownee.jade.api.ui.IElement;
 import snownee.jade.api.ui.IElementHelper;
 
-public class CardboardBoxProvider implements IBlockComponentProvider, IServerDataProvider<BlockAccessor> {
+public class CardboardBoxProvider implements IBlockComponentProvider, IServerDataProvider<BlockEntity> {
 
     public static final CardboardBoxProvider INSTANCE = new CardboardBoxProvider();
 
@@ -78,9 +81,9 @@ public class CardboardBoxProvider implements IBlockComponentProvider, IServerDat
     }
 
     @Override
-    public void appendServerData(CompoundTag data, BlockAccessor accessor) {
+    public void appendServerData(CompoundTag data, ServerPlayer serverPlayer, Level level, BlockEntity accessor, boolean b) {
 
-        TileEntityCardboardBox cardboardBox = (TileEntityCardboardBox) accessor.getBlockEntity();
+        TileEntityCardboardBox cardboardBox = (TileEntityCardboardBox) accessor;
         BlockCardboardBox.BlockData blockData = cardboardBox.storedData;
         if (blockData != null) {
 
@@ -106,7 +109,7 @@ public class CardboardBoxProvider implements IBlockComponentProvider, IServerDat
                     EntityType<?> type = ForgeRegistries.ENTITY_TYPES.getValue(ResourceLocation.tryParse(tag.toString().replace("\"", "")));
                     if (type != null) {
 
-                        Entity entity = type.create(accessor.getLevel());
+                        Entity entity = type.create(level);
                         if (entity != null) {
                             ItemStack stack = entity.getPickResult();
                             if (stack != null) {

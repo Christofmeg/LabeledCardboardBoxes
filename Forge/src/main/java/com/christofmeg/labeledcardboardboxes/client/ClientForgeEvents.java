@@ -13,7 +13,6 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SpawnerBlock;
 import net.minecraftforge.api.distmarker.Dist;
@@ -37,8 +36,7 @@ public class ClientForgeEvents {
                     Player player = event.getEntity();
                     if (player != null) {
                         if (item instanceof ItemBlockCardboardBox cardboardBox) {
-                            Level level = player.level();
-                            BlockCardboardBox.BlockData data = cardboardBox.getBlockData(level, stack);
+                            BlockCardboardBox.BlockData data = cardboardBox.getBlockData(stack);
                             if (data != null) {
                                 Block block = data.blockState.getBlock();
                                 if (block instanceof SpawnerBlock) {
@@ -49,7 +47,7 @@ public class ClientForgeEvents {
                                             if (type != null) {
                                                 ResourceLocation entityLocation = ForgeRegistries.ENTITY_TYPES.getKey(type);
                                                 if (entityLocation != null) {
-                                                    CompoundTag tileTag = cardboardBox.getBlockData(level, stack).tileTag;
+                                                    CompoundTag tileTag = cardboardBox.getBlockData(stack).tileTag;
                                                     if (tileTag != null) {
                                                         String blockString = tileTag.getString("id").replace("\"", "");
                                                         ResourceLocation location = ResourceLocation.tryParse(blockString);

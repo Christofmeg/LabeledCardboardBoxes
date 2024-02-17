@@ -1,5 +1,5 @@
 modLoader="javafml"
-loaderVersion="[47,)"
+loaderVersion="[41,)"
 issueTrackerURL="https://github.com/Christofmeg/LabeledCardboardBoxes/issues" #optional
 license="The MIT License (MIT)"
 [[mods]]
@@ -14,25 +14,25 @@ license="The MIT License (MIT)"
 [[dependencies.labeledcardboardboxes]]
     modId="forge"
     mandatory=true
-    versionRange="[47,)"
+    versionRange="[41,)"
     ordering="NONE"
     side="BOTH"
 [[dependencies.labeledcardboardboxes]]
     modId="minecraft"
     mandatory=true
-    versionRange="[1.20,1.21)"
+    versionRange="[1.19,1.19.3)"
     ordering="NONE"
     side="BOTH"
 [[dependencies.labeledcardboardboxes]]
     modId="jade"
     mandatory=true
-    versionRange="[11.0.3,)"
+    versionRange="[7.0.1,)"
     ordering="NONE"
     side="BOTH"
 [[dependencies.labeledcardboardboxes]]
     modId="mekanism"
     mandatory=true
-    versionRange="[10.4,)"
+    versionRange="[10.3,)"
     ordering="NONE"
     side="BOTH"
 [modproperties.labeledcardboardboxes]

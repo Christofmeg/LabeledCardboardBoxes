@@ -1,12 +1,12 @@
 package com.christofmeg.labeledcardboardboxes.client.data;
 
 import com.christofmeg.labeledcardboardboxes.LabeledCardboardBoxes;
-import net.minecraft.data.PackOutput;
+import net.minecraft.data.DataGenerator;
 import net.minecraftforge.common.data.LanguageProvider;
 
 public class ModLanguageProvider extends LanguageProvider {
 
-    public ModLanguageProvider(PackOutput output, String locale) {
+    public ModLanguageProvider(DataGenerator output, String locale) {
         super(output, LabeledCardboardBoxes.MOD_ID, locale);
     }
 

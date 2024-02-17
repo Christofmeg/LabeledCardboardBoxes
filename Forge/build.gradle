@@ -11,7 +11,7 @@ plugins {
 archivesBaseName = "${mod_id}-forge-${supported_versions}"
 
 minecraft {
-    mappings channel: 'parchment', version: '2023.09.03-1.20.1'
+    mappings channel: 'official', version: '1.19.2'
 
     runs {
         client {
@@ -93,11 +93,11 @@ dependencies {
         implementation fg.deobf("curse.maven:configured-457570:${forge_configured_version}")
     }
 
-    implementation fg.deobf("curse.maven:jade-324717:4973483")
+    implementation fg.deobf("curse.maven:jade-324717:4800904")
 //    implementation fg.deobf("curse.maven:item-nbt-viewer-514135:4578522")
-    implementation fg.deobf("curse.maven:mekanism-268560:4866575")
+    implementation fg.deobf("curse.maven:mekanism-268560:4644795")
 
-    implementation fg.deobf("curse.maven:applied-energistics-2-223794:5032144")
+//    implementation fg.deobf("curse.maven:applied-energistics-2-223794:5032144")
 }
 
 processResources {
@@ -121,7 +121,7 @@ tasks.register('publishCurseForge', TaskPublishCurseForge) {
     mainFile.addRequirement("jade")
     mainFile.addRequirement("mekanism")
     mainFile.addOptional("catalogue")
-    mainFile.addModLoader('Forge', 'NeoForge')
+    mainFile.addModLoader('Forge')
 }
 
 modrinth {
@@ -136,5 +136,5 @@ modrinth {
         required.project "jade"
         required.project "mekanism"
     }
-    loaders = "forge,neoforge".split(",") as List<String>
+    loaders = "forge".split(",") as List<String>
 }
