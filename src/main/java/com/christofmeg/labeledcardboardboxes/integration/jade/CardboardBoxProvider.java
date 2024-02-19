@@ -1,38 +1,40 @@
 package com.christofmeg.labeledcardboardboxes.integration.jade;
 
-import mcp.mobius.waila.api.BlockAccessor;
 import mcp.mobius.waila.api.IComponentProvider;
+import mcp.mobius.waila.api.IDataAccessor;
+import mcp.mobius.waila.api.IPluginConfig;
 import mcp.mobius.waila.api.IServerDataProvider;
-import mcp.mobius.waila.api.ITooltip;
-import mcp.mobius.waila.api.config.IPluginConfig;
-import mcp.mobius.waila.api.ui.IElement;
-import mcp.mobius.waila.api.ui.IElementHelper;
+import mcp.mobius.waila.api.RenderableTextComponent;
 import mekanism.common.block.BlockCardboardBox;
 import mekanism.common.tile.TileEntityCardboardBox;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.Tag;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.SpawnerBlock;
-import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.phys.Vec2;
+import net.minecraft.block.Block;
+import net.minecraft.block.SpawnerBlock;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.INBT;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.world.World;
+import net.minecraftforge.common.ForgeSpawnEggItem;
 import net.minecraftforge.registries.ForgeRegistries;
+import snownee.jade.Renderables;
 
-public class CardboardBoxProvider implements IComponentProvider, IServerDataProvider<BlockEntity> {
+import java.util.ArrayList;
+import java.util.List;
+
+public class CardboardBoxProvider implements IComponentProvider, IServerDataProvider<TileEntity> {
 
     public static final CardboardBoxProvider INSTANCE = new CardboardBoxProvider();
 
     @Override
-    public void appendTooltip(ITooltip tooltip, BlockAccessor accessor, IPluginConfig iPluginConfig) {
-        IElementHelper elements = tooltip.getElementHelper();
+    public void appendHead(List<ITextComponent> tooltip, IDataAccessor accessor, IPluginConfig config) {
 
         if (accessor.getServerData().contains("block")) {
             ResourceLocation location = ResourceLocation.tryParse(accessor.getServerData().getString("block"));
@@ -45,21 +47,32 @@ public class CardboardBoxProvider implements IComponentProvider, IServerDataProv
                     iconLocation = ResourceLocation.tryParse(accessor.getServerData().getString("blockEntityIcon"));
                 }
 
+
                 Item item = ForgeRegistries.ITEMS.getValue(iconLocation);
                 if (item != null) {
-                    Tag block = accessor.getServerData().get("block");
+                    INBT block = accessor.getServerData().get("block");
                     if (block != null) {
                         ItemStack stack = new ItemStack(item);
-                        IElement itemIcon = elements.item(stack, 0.5f).size(new Vec2(10, 10)).translate(new Vec2(0, -1));
-                        tooltip.add(itemIcon);
-                    }
-                }
+                        RenderableTextComponent itemIcon = Renderables.item(stack, 0.5F, 0);
 
-                tooltip.append(new TranslatableComponent("cardboard_box.mekanism.block", new TranslatableComponent(location.toString().replace(location.getNamespace() + ":", ""))));
-                if (accessor.getServerData().contains("spawnerType")) {
-                    tooltip.append(new TextComponent(" ("));
-                    tooltip.append(new TranslatableComponent(accessor.getServerData().getString("spawnerType").replace(":", ".")));
-                    tooltip.append(new TextComponent(")"));
+                        RenderableTextComponent blockComponent;
+
+                        TranslationTextComponent blockName = new TranslationTextComponent("cardboard_box.mekanism.block", new TranslationTextComponent(location.toString().replace(location.getNamespace() + ":", "")));
+                        if (accessor.getServerData().contains("spawnerType")) {
+                            blockComponent = Renderables.of(
+                                    itemIcon,
+                                    blockName,
+                                    new StringTextComponent(" ("),
+                                    new TranslationTextComponent(accessor.getServerData().getString("spawnerType").replace(":", ".")),
+                                    new StringTextComponent(")")
+                                    );
+                        }
+                        else {
+                            blockComponent = Renderables.of(itemIcon, blockName);
+                        }
+
+                        tooltip.add(blockComponent);
+                    }
                 }
             }
         }
@@ -71,17 +84,31 @@ public class CardboardBoxProvider implements IComponentProvider, IServerDataProv
                 Item item = ForgeRegistries.ITEMS.getValue(iconLocation);
                 if (item != null) {
                     ItemStack stack = new ItemStack(item);
-                    IElement itemIcon = elements.item(stack, 0.5f).size(new Vec2(10, 10)).translate(new Vec2(0, -1));
-                    tooltip.add(itemIcon);
+                    RenderableTextComponent itemIcon = Renderables.item(stack, 0.5F, 0);
+
+                    RenderableTextComponent blockEntityComponent;
+
+                    TranslationTextComponent blockEntityName = new TranslationTextComponent("cardboard_box.mekanism.tile", location.toString());
+                    if (accessor.getServerData().contains("spawnerType")) {
+                        blockEntityComponent = Renderables.of(
+                                itemIcon,
+                                blockEntityName
+                        );
+                    }
+                    else {
+                        blockEntityComponent = Renderables.of(itemIcon, blockEntityName);
+                    }
+
+                    tooltip.add(blockEntityComponent);
+
                 }
-                tooltip.append(new TranslatableComponent("cardboard_box.mekanism.block_entity", location.toString()));
             }
         }
 
     }
 
     @Override
-    public void appendServerData(CompoundTag data, ServerPlayer serverPlayer, Level level, BlockEntity accessor, boolean b) {
+    public void appendServerData(CompoundNBT data, ServerPlayerEntity serverPlayer, World level, TileEntity accessor) {
 
         TileEntityCardboardBox cardboardBox = (TileEntityCardboardBox) accessor;
         BlockCardboardBox.BlockData blockData = cardboardBox.storedData;
@@ -104,17 +131,17 @@ public class CardboardBoxProvider implements IComponentProvider, IServerDataProv
             }
 
             if (block instanceof SpawnerBlock) {
-                Tag tag = blockData.tileTag.getCompound("SpawnData").getCompound("entity").get("id");
+                INBT tag = blockData.tileTag.getCompound("SpawnData").get("id");
                 if (tag != null) {
                     EntityType<?> type = ForgeRegistries.ENTITIES.getValue(ResourceLocation.tryParse(tag.toString().replace("\"", "")));
                     if (type != null) {
 
                         Entity entity = type.create(level);
                         if (entity != null) {
-                            ItemStack stack = entity.getPickResult();
-                            if (stack != null) {
+                            Item item = ForgeSpawnEggItem.fromEntityType(entity.getType());
+                            if (item != null) {
 
-                                ResourceLocation itemLocation = ForgeRegistries.ITEMS.getKey(stack.getItem());
+                                ResourceLocation itemLocation = ForgeRegistries.ITEMS.getKey(item);
                                 if (itemLocation != null) {
                                     data.putString("itemIcon", itemLocation.toString());
                                 }
