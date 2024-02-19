@@ -61,7 +61,7 @@ public class ClientForgeEvents {
 
                                                             event.getToolTip().remove(MekanismLang.BLOCK.translate(data.blockState.getBlock()));
                                                             event.getToolTip().add(MekanismLang.BLOCK.translate(data.blockState.getBlock())
-                                                                    .append(new TextComponent(" ("))        //entityLocation.toShortLanguageKey()
+                                                                    .append(new TextComponent(" ("))
                                                                     .append(new TranslatableComponent(capitaliseAllWords(entityLocation.getPath().replace("_", " "))))
                                                                     .append(new TextComponent(")"))
                                                                     .withStyle(ChatFormatting.WHITE)
