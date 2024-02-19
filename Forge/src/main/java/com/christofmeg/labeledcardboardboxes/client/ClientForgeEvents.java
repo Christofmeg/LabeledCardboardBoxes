@@ -1,9 +1,11 @@
 package com.christofmeg.labeledcardboardboxes.client;
 
 import com.christofmeg.labeledcardboardboxes.LabeledCardboardBoxes;
+import mekanism.api.text.EnumColor;
 import mekanism.common.MekanismLang;
 import mekanism.common.block.BlockCardboardBox;
 import mekanism.common.item.block.ItemBlockCardboardBox;
+import mekanism.common.util.text.BooleanStateDisplay;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
@@ -39,6 +41,9 @@ public class ClientForgeEvents {
                         if (item instanceof ItemBlockCardboardBox cardboardBox) {
                             BlockCardboardBox.BlockData data = cardboardBox.getBlockData(stack);
                             if (data != null) {
+
+                                event.getToolTip().remove(MekanismLang.BLOCK_DATA.translateColored(EnumColor.INDIGO, BooleanStateDisplay.YesNo.of(((ItemBlockCardboardBox) item).getBlockData(stack) != null)));
+
                                 Block block = data.blockState.getBlock();
                                 if (block instanceof SpawnerBlock) {
                                     if (data.tileTag != null) {

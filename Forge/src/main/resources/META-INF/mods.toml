@@ -4,7 +4,7 @@ issueTrackerURL="https://github.com/Christofmeg/LabeledCardboardBoxes/issues" #o
 license="The MIT License (MIT)"
 [[mods]]
 	modId="labeledcardboardboxes"
-	version="1.0.0"
+	version="1.1.0"
 	displayName="Labeled Cardboard Boxes"
 	displayURL="https://github.com/Christofmeg/LabeledCardboardBoxes" #optional
 	#logoFile="icon.png"
