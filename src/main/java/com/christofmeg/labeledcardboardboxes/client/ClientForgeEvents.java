@@ -42,7 +42,7 @@ public class ClientForgeEvents {
                             BlockCardboardBox.BlockData data = ((ItemBlockCardboardBox) item).getBlockData(stack);
                             if (data != null) {
 
-//                                event.getToolTip().remove(MekanismLang.BLOCK_DATA.translateColored(EnumColor.INDIGO, BooleanStateDisplay.YesNo.of(((ItemBlockCardboardBox) item).getBlockData(stack) != null)));
+                                event.getToolTip().remove(MekanismLang.BLOCK_DATA.translateColored(EnumColor.INDIGO, BooleanStateDisplay.YesNo.of(((ItemBlockCardboardBox) item).getBlockData(stack) != null)));
 
                                 Block block = data.blockState.getBlock();
                                 if (block instanceof SpawnerBlock) {
