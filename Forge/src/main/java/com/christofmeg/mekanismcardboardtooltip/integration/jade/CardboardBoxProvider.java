@@ -1,6 +1,6 @@
-package com.christofmeg.labeledcardboardboxes.integration.jade;
+package com.christofmeg.mekanismcardboardtooltip.integration.jade;
 
-import com.christofmeg.labeledcardboardboxes.LabeledCardboardBoxes;
+import com.christofmeg.mekanismcardboardtooltip.MekanismCardboardTooltip;
 import mekanism.common.block.BlockCardboardBox;
 import mekanism.common.tile.TileEntityCardboardBox;
 import net.minecraft.nbt.CompoundTag;
@@ -131,7 +131,7 @@ public class CardboardBoxProvider implements IBlockComponentProvider, IServerDat
 
     @Override
     public ResourceLocation getUid() {
-        return new ResourceLocation(LabeledCardboardBoxes.MOD_ID, "cardboard_box");
+        return new ResourceLocation(MekanismCardboardTooltip.MOD_ID, "cardboard_box");
     }
 
 }
