@@ -1,14 +1,14 @@
-package com.christofmeg.labeledcardboardboxes.common.data;
+package com.christofmeg.mekanismcardboardtooltip.common.data;
 
-import com.christofmeg.labeledcardboardboxes.LabeledCardboardBoxes;
-import com.christofmeg.labeledcardboardboxes.client.data.ModLanguageProvider;
+import com.christofmeg.mekanismcardboardtooltip.MekanismCardboardTooltip;
+import com.christofmeg.mekanismcardboardtooltip.client.data.ModLanguageProvider;
 import net.minecraft.data.DataGenerator;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.GatherDataEvent;
 
 @SuppressWarnings("unused")
-@Mod.EventBusSubscriber(modid = LabeledCardboardBoxes.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
+@Mod.EventBusSubscriber(modid = MekanismCardboardTooltip.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class DataGenerators {
     private DataGenerators() {}
     private static final String[] LOCALE_CODES = new String[] {"en_us",};

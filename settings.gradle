@@ -28,6 +28,4 @@ pluginManagement {
     }
 }
 
-rootProject.name = 'Labeled Cardboard Boxes'
-include("Common")
-include("Forge")
+rootProject.name = 'Mekanism Cardboard Tooltip'

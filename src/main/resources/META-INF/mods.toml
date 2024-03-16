@@ -1,39 +1,39 @@
 modLoader="javafml"
 loaderVersion="[32,)"
-issueTrackerURL="https://github.com/Christofmeg/LabeledCardboardBoxes/issues" #optional
+issueTrackerURL="https://github.com/Christofmeg/MekanismCardboardTooltip/issues" #optional
 license="The MIT License (MIT)"
 [[mods]]
-	modId="labeledcardboardboxes"
+	modId="mekanismcardboardtooltip"
 	version="1.1.0"
-	displayName="Labeled Cardboard Boxes"
-	displayURL="https://github.com/Christofmeg/LabeledCardboardBoxes" #optional
+	displayName="Mekanism Cardboard Tooltip"
+	displayURL="https://github.com/Christofmeg/MekanismCardboardTooltip" #optional
 	#logoFile="icon.png"
 	#credits=""
 	authors="Christofmeg"
 	description="Mekanism Cardboard Boxes + Jade = this. \nCardboard Boxes now shows what Block and Block Entity is inside. \nComes with special support for monster spawners."
-[[dependencies.labeledcardboardboxes]]
+[[dependencies.mekanismcardboardtooltip]]
     modId="forge"
     mandatory=true
     versionRange="[32,)"
     ordering="NONE"
     side="BOTH"
-[[dependencies.labeledcardboardboxes]]
+[[dependencies.mekanismcardboardtooltip]]
     modId="minecraft"
     mandatory=true
     versionRange="[1.16,1.17)"
     ordering="NONE"
     side="BOTH"
-[[dependencies.labeledcardboardboxes]]
+[[dependencies.mekanismcardboardtooltip]]
     modId="jade"
     mandatory=true
     versionRange="[2.0.0,)"
     ordering="NONE"
     side="BOTH"
-[[dependencies.labeledcardboardboxes]]
+[[dependencies.mekanismcardboardtooltip]]
     modId="mekanism"
     mandatory=true
     versionRange="[10.0,)"
     ordering="NONE"
     side="BOTH"
-[modproperties.labeledcardboardboxes]
+[modproperties.mekanismcardboardtooltip]
     catalogueItemIcon="mekanism:cardboard_box"

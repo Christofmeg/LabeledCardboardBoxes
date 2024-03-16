@@ -1,4 +1,4 @@
-package com.christofmeg.labeledcardboardboxes.integration.jade;
+package com.christofmeg.mekanismcardboardtooltip.integration.jade;
 
 import mcp.mobius.waila.api.IComponentProvider;
 import mcp.mobius.waila.api.IDataAccessor;
@@ -26,7 +26,6 @@ import net.minecraftforge.common.ForgeSpawnEggItem;
 import net.minecraftforge.registries.ForgeRegistries;
 import snownee.jade.Renderables;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class CardboardBoxProvider implements IComponentProvider, IServerDataProvider<TileEntity> {
