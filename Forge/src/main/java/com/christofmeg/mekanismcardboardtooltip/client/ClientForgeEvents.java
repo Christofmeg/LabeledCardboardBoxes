@@ -1,6 +1,6 @@
-package com.christofmeg.labeledcardboardboxes.client;
+package com.christofmeg.mekanismcardboardtooltip.client;
 
-import com.christofmeg.labeledcardboardboxes.LabeledCardboardBoxes;
+import com.christofmeg.mekanismcardboardtooltip.MekanismCardboardTooltip;
 import mekanism.api.text.EnumColor;
 import mekanism.common.MekanismLang;
 import mekanism.common.block.BlockCardboardBox;
@@ -25,7 +25,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.ForgeRegistries;
 
 @SuppressWarnings("unused")
-@Mod.EventBusSubscriber(value = Dist.CLIENT, modid = LabeledCardboardBoxes.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
+@Mod.EventBusSubscriber(value = Dist.CLIENT, modid = MekanismCardboardTooltip.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class ClientForgeEvents {
 
     @SubscribeEvent
