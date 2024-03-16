@@ -1,6 +1,6 @@
-package com.christofmeg.labeledcardboardboxes.integration.jade;
+package com.christofmeg.mekanismcardboardtooltip.integration.jade;
 
-import com.christofmeg.labeledcardboardboxes.LabeledCardboardBoxes;
+import com.christofmeg.mekanismcardboardtooltip.MekanismCardboardTooltip;
 import mcp.mobius.waila.api.IWailaClientRegistration;
 import mcp.mobius.waila.api.IWailaCommonRegistration;
 import mcp.mobius.waila.api.IWailaPlugin;
@@ -10,7 +10,7 @@ import mekanism.common.block.BlockCardboardBox;
 import mekanism.common.tile.TileEntityCardboardBox;
 
 @SuppressWarnings("unused")
-@WailaPlugin(LabeledCardboardBoxes.MOD_ID)
+@WailaPlugin(MekanismCardboardTooltip.MOD_ID)
 public class ModJadePlugin implements IWailaPlugin {
 
     @Override
