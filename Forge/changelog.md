@@ -1,4 +1,1 @@
-* Made Jade an optional dependency
-
-
-* Fix version numbering
+* Correct colors on item tooltips.

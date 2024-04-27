@@ -45,45 +45,41 @@ public class ClientForgeEvents {
                         if (stack.hasTag()) {
                             if (data != null) {
                                 event.getToolTip().add(MekanismLang.BLOCK_DATA.translateColored(EnumColor.INDIGO, BooleanStateDisplay.YesNo.of(true, true)));
+
                                 Block block = data.blockState.getBlock();
+                                event.getToolTip().remove(MekanismLang.BLOCK.translate(block));
+                                event.getToolTip().add(
+                                        TextComponentUtil.build(EnumColor.INDIGO, MekanismLang.BLOCK.translate(
+                                                Component.translatable(block.getDescriptionId()).withStyle(ChatFormatting.GRAY)))
+                                );
+
                                 if (block instanceof SpawnerBlock) {
-                                    if (data.tileTag != null) {
+                                    CompoundTag tileTag = data.tileTag;
+                                    if (tileTag != null) {
+
+                                        event.getToolTip().remove(MekanismLang.BLOCK_ENTITY.translate(tileTag.getString("id")));
+                                        event.getToolTip().add(
+                                                MekanismLang.BLOCK_ENTITY.translateColored(EnumColor.INDIGO,
+                                                        Component.translatable(tileTag.getString("id")).withStyle(ChatFormatting.GRAY))
+                                        );
+
                                         Tag tag = data.tileTag.getCompound("SpawnData").getCompound("entity").get("id");
                                         if (tag != null) {
                                             EntityType<?> type = ForgeRegistries.ENTITY_TYPES.getValue(ResourceLocation.tryParse(tag.toString().replace("\"", "")));
                                             if (type != null) {
                                                 ResourceLocation entityLocation = ForgeRegistries.ENTITY_TYPES.getKey(type);
                                                 if (entityLocation != null) {
-                                                    CompoundTag tileTag = cardboardBox.getBlockData(level, stack).tileTag;
-                                                    if (tileTag != null) {
-                                                        String blockString = tileTag.getString("id").replace("\"", "");
-                                                        ResourceLocation location = ResourceLocation.tryParse(blockString);
-                                                        if (location != null) {
-
-                                                            event.getToolTip().remove(MekanismLang.BLOCK.translate(data.blockState.getBlock()));
-                                                            event.getToolTip().add(
-                                                                    TextComponentUtil.build(EnumColor.INDIGO, MekanismLang.BLOCK.translate(
-                                                                    Component.translatable(data.blockState.getBlock().getDescriptionId()).withStyle(ChatFormatting.GRAY)))
-                                                            );
-
-                                                            event.getToolTip().remove(MekanismLang.BLOCK_ENTITY.translate(tileTag.getString("id")));
-                                                            event.getToolTip().add(
-                                                                    MekanismLang.BLOCK_ENTITY.translateColored(EnumColor.INDIGO,
-                                                                    Component.translatable(tileTag.getString("id")).withStyle(ChatFormatting.GRAY))
-                                                            );
-
-                                                            event.getToolTip().add(
-                                                                    TextComponentUtil.build(EnumColor.INDIGO,
-                                                                    Component.translatable("cardboard_box.mekanism.block_entity.spawn_type",
-                                                                        Component.translatable(capitaliseAllWords(entityLocation.toShortLanguageKey().replace("_", " "))).withStyle(ChatFormatting.GRAY)
-                                                                    )
-                                                                )
-                                                            );
-                                                        }
-                                                    }
+                                                    event.getToolTip().add(
+                                                        TextComponentUtil.build(EnumColor.INDIGO,
+                                                            Component.translatable("cardboard_box.mekanism.block_entity.spawn_type",
+                                                                Component.translatable(capitaliseAllWords(entityLocation.toShortLanguageKey().replace("_", " "))).withStyle(ChatFormatting.GRAY)
+                                                            )
+                                                        )
+                                                    );
                                                 }
                                             }
                                         }
+
                                     }
                                 }
                             }
