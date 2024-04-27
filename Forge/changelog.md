@@ -1,1 +1,1 @@
-* Correct colors on item tooltips.
+* Added WTHIT support
