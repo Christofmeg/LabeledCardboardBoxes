@@ -1,1 +1,1 @@
-Rename mod
+Tooltip now matches the default tooltip provided by Mekanism in version 10.5

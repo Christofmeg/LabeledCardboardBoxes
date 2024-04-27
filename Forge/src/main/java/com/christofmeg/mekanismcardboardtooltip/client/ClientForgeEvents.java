@@ -2,6 +2,7 @@ package com.christofmeg.mekanismcardboardtooltip.client;
 
 import com.christofmeg.mekanismcardboardtooltip.MekanismCardboardTooltip;
 import mekanism.api.text.EnumColor;
+import mekanism.api.text.TextComponentUtil;
 import mekanism.common.MekanismLang;
 import mekanism.common.block.BlockCardboardBox;
 import mekanism.common.item.block.ItemBlockCardboardBox;
@@ -35,16 +36,15 @@ public class ClientForgeEvents {
             Item item = ForgeRegistries.ITEMS.getValue(ResourceLocation.tryParse("mekanism:cardboard_box"));
             ItemStack stack = event.getItemStack();
             if (stack.getItem() == item) {
-                if (stack.hasTag()) {
-                    Player player = event.getEntity();
-                    if (player != null) {
-                        if (item instanceof ItemBlockCardboardBox cardboardBox) {
-                            Level level = player.level();
-                            BlockCardboardBox.BlockData data = cardboardBox.getBlockData(level, stack);
+                Player player = event.getEntity();
+                if (player != null) {
+                    if (item instanceof ItemBlockCardboardBox cardboardBox) {
+                        Level level = player.level();
+                        BlockCardboardBox.BlockData data = cardboardBox.getBlockData(level, stack);
+                        event.getToolTip().remove(MekanismLang.BLOCK_DATA.translateColored(EnumColor.INDIGO, BooleanStateDisplay.YesNo.of(data != null)));
+                        if (stack.hasTag()) {
                             if (data != null) {
-
-                                event.getToolTip().remove(MekanismLang.BLOCK_DATA.translateColored(EnumColor.INDIGO, BooleanStateDisplay.YesNo.of(((ItemBlockCardboardBox) item).getBlockData(level, stack) != null)));
-
+                                event.getToolTip().add(MekanismLang.BLOCK_DATA.translateColored(EnumColor.INDIGO, BooleanStateDisplay.YesNo.of(true, true)));
                                 Block block = data.blockState.getBlock();
                                 if (block instanceof SpawnerBlock) {
                                     if (data.tileTag != null) {
@@ -61,15 +61,24 @@ public class ClientForgeEvents {
                                                         if (location != null) {
 
                                                             event.getToolTip().remove(MekanismLang.BLOCK.translate(data.blockState.getBlock()));
-                                                            event.getToolTip().add(MekanismLang.BLOCK.translate(data.blockState.getBlock())
-                                                                    .append(Component.literal(" ("))
-                                                                    .append(Component.translatable(capitaliseAllWords(entityLocation.toShortLanguageKey().replace("_", " "))))
-                                                                    .append(Component.literal(")"))
-                                                                    .withStyle(ChatFormatting.WHITE)
+                                                            event.getToolTip().add(
+                                                                    TextComponentUtil.build(EnumColor.INDIGO, MekanismLang.BLOCK.translate(
+                                                                    Component.translatable(data.blockState.getBlock().getDescriptionId()).withStyle(ChatFormatting.GRAY)))
                                                             );
 
                                                             event.getToolTip().remove(MekanismLang.BLOCK_ENTITY.translate(tileTag.getString("id")));
-                                                            event.getToolTip().add(MekanismLang.BLOCK_ENTITY.translate(tileTag.getString("id")));
+                                                            event.getToolTip().add(
+                                                                    MekanismLang.BLOCK_ENTITY.translateColored(EnumColor.INDIGO,
+                                                                    Component.translatable(tileTag.getString("id")).withStyle(ChatFormatting.GRAY))
+                                                            );
+
+                                                            event.getToolTip().add(
+                                                                    TextComponentUtil.build(EnumColor.INDIGO,
+                                                                    Component.translatable("cardboard_box.mekanism.block_entity.spawn_type",
+                                                                        Component.translatable(capitaliseAllWords(entityLocation.toShortLanguageKey().replace("_", " "))).withStyle(ChatFormatting.GRAY)
+                                                                    )
+                                                                )
+                                                            );
                                                         }
                                                     }
                                                 }
@@ -78,6 +87,8 @@ public class ClientForgeEvents {
                                     }
                                 }
                             }
+                        } else {
+                            event.getToolTip().add(MekanismLang.BLOCK_DATA.translateColored(EnumColor.INDIGO, TextComponentUtil.build(EnumColor.RED, MekanismLang.NO)));
                         }
                     }
                 }

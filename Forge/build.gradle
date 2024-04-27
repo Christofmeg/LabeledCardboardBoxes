@@ -97,7 +97,7 @@ dependencies {
 //    implementation fg.deobf("curse.maven:item-nbt-viewer-514135:4578522")
     implementation fg.deobf("curse.maven:mekanism-268560:4866575")
 
-    implementation fg.deobf("curse.maven:applied-energistics-2-223794:5032144")
+
 }
 
 processResources {
