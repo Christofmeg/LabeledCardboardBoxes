@@ -1,1 +1,4 @@
-Tooltip now matches the default tooltip provided by Mekanism in version 10.5
+* Made Jade an optional dependency
+
+
+* Fix version numbering
