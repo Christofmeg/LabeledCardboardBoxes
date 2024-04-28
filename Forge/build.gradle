@@ -83,6 +83,11 @@ dependencies {
         implementation fg.deobf("curse.maven:catalogue-459701:${forge_catalogue_version}")
     }
 
+    // CONFIGURED
+    if (project.hasProperty('forge_configured_version')) {
+        implementation fg.deobf("curse.maven:configured-457570:${forge_configured_version}")
+    }
+
     implementation fg.deobf("curse.maven:mekanism-268560:4866575")
 
     implementation fg.deobf("curse.maven:jade-324717:4973483")
@@ -138,6 +143,7 @@ tasks.register('publishCurseForge', TaskPublishCurseForge) {
     }
     mainFile.addRequirement("mekanism")
     mainFile.addOptional("jade")
+    mainFile.addOptional("the-one-probe")
     mainFile.addOptional("wthit-forge")
     mainFile.addOptional("catalogue")
     mainFile.addModLoader('Forge', 'NeoForge')
@@ -154,6 +160,7 @@ modrinth {
     dependencies {
         required.project "mekanism"
         optional.project "jade"
+        optional.project "the-one-probe"
         optional.project "wthit"
     }
     loaders = "forge,neoforge".split(",") as List<String>

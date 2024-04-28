@@ -14,7 +14,6 @@ import mekanism.common.MekanismLang;
 import mekanism.common.block.BlockCardboardBox;
 import mekanism.common.tile.TileEntityCardboardBox;
 import net.minecraft.ChatFormatting;
-import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
@@ -140,7 +139,6 @@ public class CardboardBoxProvider implements IBlockComponentProvider, IDataProvi
                                 if (entity != null) {
                                     ItemStack stack = entity.getPickResult();
                                     if (stack != null) {
-
                                         ResourceLocation itemLocation = ForgeRegistries.ITEMS.getKey(stack.getItem());
                                         if (itemLocation != null) {
                                             data.putString("itemIcon", itemLocation.toString());
