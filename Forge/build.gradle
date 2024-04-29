@@ -11,7 +11,7 @@ plugins {
 archivesBaseName = "${mod_id}-forge-${supported_versions}"
 
 minecraft {
-    mappings channel: 'official', version: '1.19.2'
+    mappings channel: 'parchment', version: '2022.11.27-1.19.2'
 
     runs {
         client {
@@ -78,26 +78,23 @@ dependencies {
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
     compileOnly project(":Common")
 
-    // JEI
-    if (project.hasProperty('jei_version')) {
-        compileOnly(fg.deobf("mezz.jei:jei-${minecraft_version}-common-api:${jei_version}"))
-        compileOnly(fg.deobf("mezz.jei:jei-${minecraft_version}-forge-api:${jei_version}"))
-        runtimeOnly(fg.deobf("mezz.jei:jei-${minecraft_version}-forge:${jei_version}"))
-    }
     // CATALOGUE
     if (project.hasProperty('forge_catalogue_version')) {
         implementation fg.deobf("curse.maven:catalogue-459701:${forge_catalogue_version}")
     }
+
     // CONFIGURED
     if (project.hasProperty('forge_configured_version')) {
         implementation fg.deobf("curse.maven:configured-457570:${forge_configured_version}")
     }
 
-    implementation fg.deobf("curse.maven:jade-324717:4800904")
-//    implementation fg.deobf("curse.maven:item-nbt-viewer-514135:4578522")
     implementation fg.deobf("curse.maven:mekanism-268560:4644795")
 
-//    implementation fg.deobf("curse.maven:applied-energistics-2-223794:5032144")
+    implementation fg.deobf("curse.maven:jade-324717:4800904")
+    implementation fg.deobf("curse.maven:the-one-probe-245211:3965693")
+    implementation fg.deobf("curse.maven:wthit-forge-455982:5285380")
+    implementation fg.deobf("curse.maven:badpackets-615134:4784364")
+
 }
 
 processResources {
@@ -106,6 +103,32 @@ processResources {
 }
 
 jar.finalizedBy('reobfJar')
+
+tasks.withType(ProcessResources).configureEach {
+    var replaceProperties = [
+            file: 'META-INF/mods.toml',
+            minecraft_version: minecraft_version,
+            minecraft_version_range: minecraft_version_range,
+            forge_version: forge_version,
+            forge_version_range: forge_version_range,
+            loader_version_range: loader_version_range,
+            mod_id: mod_id,
+            mod_name: mod_name,
+            mod_license: mod_license,
+            version: version,
+            mod_authors: mod_authors,
+            mod_description: mod_description,
+            mekanism_version_range: mekanism_version_range,
+            jade_version_range: jade_version_range,
+            pack_format_number: pack_format_number
+    ]
+
+    inputs.properties replaceProperties
+
+    filesMatching(['META-INF/mods.toml', 'pack.mcmeta']) {
+        expand replaceProperties
+    }
+}
 
 tasks.register('publishCurseForge', TaskPublishCurseForge) {
     apiToken = file('../../API Tokens/mekanismcardboardtooltip.md')
@@ -118,8 +141,10 @@ tasks.register('publishCurseForge', TaskPublishCurseForge) {
     "${forge_release_versions}".split(',').each {
         mainFile.addGameVersion("${it}")
     }
-    mainFile.addRequirement("jade")
     mainFile.addRequirement("mekanism")
+    mainFile.addOptional("jade")
+    mainFile.addOptional("the-one-probe")
+    mainFile.addOptional("wthit-forge")
     mainFile.addOptional("catalogue")
     mainFile.addModLoader('Forge')
 }
@@ -133,8 +158,10 @@ modrinth {
     uploadFile = file("${project.buildDir}/libs/${archivesBaseName}-${version}.jar")
     gameVersions = "${forge_release_versions}".split(",") as List<String>
     dependencies {
-        required.project "jade"
         required.project "mekanism"
+        optional.project "jade"
+        optional.project "the-one-probe"
+        optional.project "wthit"
     }
     loaders = "forge".split(",") as List<String>
 }
