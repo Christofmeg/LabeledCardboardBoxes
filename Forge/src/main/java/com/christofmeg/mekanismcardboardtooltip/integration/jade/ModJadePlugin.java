@@ -1,6 +1,13 @@
 package com.christofmeg.mekanismcardboardtooltip.integration.jade;
 
 import com.christofmeg.mekanismcardboardtooltip.MekanismCardboardTooltip;
+import mcp.mobius.waila.api.IWailaPlugin;
+import mcp.mobius.waila.api.TooltipPosition;
+import mcp.mobius.waila.api.WailaPlugin;
+import mekanism.common.block.BlockCardboardBox;
+import mekanism.common.tile.TileEntityCardboardBox;
+
+import com.christofmeg.mekanismcardboardtooltip.MekanismCardboardTooltip;
 import mcp.mobius.waila.api.IWailaClientRegistration;
 import mcp.mobius.waila.api.IWailaCommonRegistration;
 import mcp.mobius.waila.api.IWailaPlugin;

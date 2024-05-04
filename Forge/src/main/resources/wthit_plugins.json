@@ -1,0 +1,7 @@
+{
+  "mekanismcardboardtooltip:plugin": {
+    "initializer": "com.christofmeg.mekanismcardboardtooltip.integration.wthit.ModWTHITPlugin",
+    "side": "*",
+    "required": []
+  }
+}
