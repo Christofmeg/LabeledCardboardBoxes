@@ -105,9 +105,10 @@ dependencies {
     }
 
     implementation fg.deobf("curse.maven:mekanism-268560:3659389")
-
-//    implementation fg.deobf("curse.maven:jade-324717:3910873")
     implementation fg.deobf("curse.maven:the-one-probe-245211:3752096")
+
+    // Only 1 at a time
+//    implementation fg.deobf("curse.maven:jade-324717:3910873")
     implementation fg.deobf("curse.maven:wthit-forge-455982:3831595")
 //    implementation fg.deobf("curse.maven:hwyla-253449:3033593")
 
