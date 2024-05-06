@@ -104,11 +104,12 @@ dependencies {
         implementation fg.deobf("curse.maven:configured-457570:${forge_configured_version}")
     }
 
-    implementation fg.deobf("curse.maven:jade-324717:3910873")
-//    implementation fg.deobf("curse.maven:item-nbt-viewer-514135:3422060")
     implementation fg.deobf("curse.maven:mekanism-268560:3659389")
 
-//    implementation fg.deobf("curse.maven:applied-energistics-2-223794:3608871")
+    implementation fg.deobf("curse.maven:jade-324717:3910873")
+    implementation fg.deobf("curse.maven:the-one-probe-245211:3752096")
+//    implementation fg.deobf("curse.maven:wthit-forge-455982:3831595")
+//    implementation fg.deobf("curse.maven:hwyla-253449:3033593")
 }
 
 processResources {
@@ -128,7 +129,7 @@ tasks.register('publishCurseForge', TaskPublishCurseForge) {
     "${forge_release_versions}".split(',').each {
         mainFile.addGameVersion("${it}")
     }
-    mainFile.addRequirement("jade")
+    mainFile.addRequirement("waila")
     mainFile.addRequirement("mekanism")
     mainFile.addOptional("catalogue")
     mainFile.addModLoader('Forge')
@@ -143,7 +144,7 @@ modrinth {
     uploadFile = file("${project.buildDir}/libs/${archivesBaseName}-${version}.jar")
     gameVersions = "${forge_release_versions}".split(",") as List<String>
     dependencies {
-        required.project "jade"
+        required.project "waila"
         required.project "mekanism"
     }
     loaders = "forge".split(",") as List<String>

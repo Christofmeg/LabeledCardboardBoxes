@@ -2,12 +2,14 @@ package com.christofmeg.mekanismcardboardtooltip.client;
 
 import com.christofmeg.mekanismcardboardtooltip.MekanismCardboardTooltip;
 import mekanism.api.text.EnumColor;
+import mekanism.api.text.TextComponentUtil;
 import mekanism.common.MekanismLang;
 import mekanism.common.block.BlockCardboardBox;
 import mekanism.common.item.block.ItemBlockCardboardBox;
 import mekanism.common.util.text.BooleanStateDisplay;
 import net.minecraft.block.Block;
 import net.minecraft.block.SpawnerBlock;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
@@ -15,9 +17,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.INBT;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -35,48 +37,57 @@ public class ClientForgeEvents {
             Item item = ForgeRegistries.ITEMS.getValue(ResourceLocation.tryParse("mekanism:cardboard_box"));
             ItemStack stack = event.getItemStack();
             if (stack.getItem() == item) {
-                if (stack.hasTag()) {
-                    PlayerEntity player = event.getPlayer();
-                    if (player != null) {
-                        if (item instanceof ItemBlockCardboardBox) {
-                            BlockCardboardBox.BlockData data = ((ItemBlockCardboardBox) item).getBlockData(stack);
+                Entity entity = event.getEntity();
+                if (entity instanceof PlayerEntity) {
+                    PlayerEntity player = (PlayerEntity) entity;
+                    if (item instanceof ItemBlockCardboardBox) {
+                        World level = player.level;
+                        ItemBlockCardboardBox cardboardBox = (ItemBlockCardboardBox) item;
+                        BlockCardboardBox.BlockData data = cardboardBox.getBlockData(stack);
+                        event.getToolTip().remove(MekanismLang.BLOCK_DATA.translateColored(EnumColor.INDIGO, BooleanStateDisplay.YesNo.of(data != null)));
+                        if (stack.hasTag()) {
                             if (data != null) {
-
-                                event.getToolTip().remove(MekanismLang.BLOCK_DATA.translateColored(EnumColor.INDIGO, BooleanStateDisplay.YesNo.of(((ItemBlockCardboardBox) item).getBlockData(stack) != null)));
+                                event.getToolTip().add(MekanismLang.BLOCK_DATA.translateColored(EnumColor.INDIGO, BooleanStateDisplay.YesNo.of(true, true)));
 
                                 Block block = data.blockState.getBlock();
+                                event.getToolTip().remove(MekanismLang.BLOCK.translate(block));
+                                event.getToolTip().add(
+                                        TextComponentUtil.build(EnumColor.INDIGO, MekanismLang.BLOCK.translate(
+                                                new TranslationTextComponent(block.getDescriptionId()).withStyle(TextFormatting.GRAY)))
+                                );
+
                                 if (block instanceof SpawnerBlock) {
-                                    if (data.tileTag != null) {
+                                    CompoundNBT tileTag = data.tileTag;
+                                    if (tileTag != null) {
+
+                                        event.getToolTip().remove(MekanismLang.TILE.translate(tileTag.getString("id")));
+                                        event.getToolTip().add(
+                                                MekanismLang.TILE.translateColored(EnumColor.INDIGO,
+                                                        new TranslationTextComponent(tileTag.getString("id")).withStyle(TextFormatting.GRAY))
+                                        );
+
                                         INBT tag = data.tileTag.getCompound("SpawnData").get("id");
                                         if (tag != null) {
                                             EntityType<?> type = ForgeRegistries.ENTITIES.getValue(ResourceLocation.tryParse(tag.toString().replace("\"", "")));
                                             if (type != null) {
                                                 ResourceLocation entityLocation = ForgeRegistries.ENTITIES.getKey(type);
                                                 if (entityLocation != null) {
-                                                    CompoundNBT tileTag = ((ItemBlockCardboardBox) item).getBlockData(stack).tileTag;
-                                                    if (tileTag != null) {
-                                                        String blockString = tileTag.getString("id").replace("\"", "");
-                                                        ResourceLocation location = ResourceLocation.tryParse(blockString);
-                                                        if (location != null) {
-
-                                                            event.getToolTip().remove(MekanismLang.BLOCK.translate(data.blockState.getBlock()));
-                                                            event.getToolTip().add(MekanismLang.BLOCK.translate(data.blockState.getBlock())
-                                                                    .append(new StringTextComponent(" ("))
-                                                                    .append(new TranslationTextComponent(capitaliseAllWords(entityLocation.getPath().replace("_", " "))))
-                                                                    .append(new StringTextComponent(")"))
-                                                                    .withStyle(TextFormatting.WHITE)
-                                                            );
-
-                                                            event.getToolTip().remove(MekanismLang.TILE.translate(tileTag.getString("id")));
-                                                            event.getToolTip().add(MekanismLang.TILE.translate(tileTag.getString("id")));
-                                                        }
-                                                    }
+                                                    event.getToolTip().add(
+                                                            TextComponentUtil.build(EnumColor.INDIGO,
+                                                                    new TranslationTextComponent("cardboard_box.mekanism.block_entity.spawn_type",
+                                                                            new TranslationTextComponent(capitaliseAllWords(entityLocation.getPath().replace("_", " "))).withStyle(TextFormatting.GRAY)
+                                                                    )
+                                                            )
+                                                    );
                                                 }
                                             }
                                         }
+
                                     }
                                 }
                             }
+                        } else {
+                            event.getToolTip().add(MekanismLang.BLOCK_DATA.translateColored(EnumColor.INDIGO, TextComponentUtil.build(EnumColor.RED, MekanismLang.NO)));
                         }
                     }
                 }

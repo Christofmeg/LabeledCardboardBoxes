@@ -4,13 +4,13 @@ issueTrackerURL="https://github.com/Christofmeg/MekanismCardboardTooltip/issues"
 license="The MIT License (MIT)"
 [[mods]]
 	modId="mekanismcardboardtooltip"
-	version="1.1.0"
+	version="1.4.0"
 	displayName="Mekanism Cardboard Tooltip"
 	displayURL="https://github.com/Christofmeg/MekanismCardboardTooltip" #optional
 	#logoFile="icon.png"
 	#credits=""
 	authors="Christofmeg"
-	description="Mekanism Cardboard Boxes + Jade = this. \nCardboard Boxes now shows what Block and Block Entity is inside. \nComes with special support for monster spawners."
+	description="HWYLA/Jade/TOP/WAILA/WTHIT plugin that shows what Block and Block Entity is inside Mekanism Cardboard Boxes."
 [[dependencies.mekanismcardboardtooltip]]
     modId="forge"
     mandatory=true
@@ -25,7 +25,7 @@ license="The MIT License (MIT)"
     side="BOTH"
 [[dependencies.mekanismcardboardtooltip]]
     modId="jade"
-    mandatory=true
+    mandatory=false
     versionRange="[2.0.0,)"
     ordering="NONE"
     side="BOTH"

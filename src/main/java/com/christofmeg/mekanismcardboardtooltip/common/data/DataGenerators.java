@@ -17,7 +17,9 @@ public class DataGenerators {
     public static void gatherData(GatherDataEvent event) {
         DataGenerator gen = event.getGenerator();
         for(String locale : LOCALE_CODES) {
-            gen.addProvider(new ModLanguageProvider(gen, locale));
+            if (event.includeClient()) {
+                gen.addProvider(new ModLanguageProvider(gen, locale));
+            }
         }
     }
 
