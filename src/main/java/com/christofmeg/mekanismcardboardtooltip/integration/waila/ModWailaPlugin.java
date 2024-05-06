@@ -1,4 +1,4 @@
-package com.christofmeg.mekanismcardboardtooltip.integration.jade;
+package com.christofmeg.mekanismcardboardtooltip.integration.waila;
 
 import com.christofmeg.mekanismcardboardtooltip.MekanismCardboardTooltip;
 import mcp.mobius.waila.api.IRegistrar;
@@ -9,12 +9,13 @@ import mekanism.common.block.BlockCardboardBox;
 import mekanism.common.tile.TileEntityCardboardBox;
 
 @SuppressWarnings("unused")
-@WailaPlugin(MekanismCardboardTooltip.MOD_ID)
-public class ModJadePlugin implements IWailaPlugin {
+@WailaPlugin(value = MekanismCardboardTooltip.MOD_ID)
+public class ModWailaPlugin implements IWailaPlugin {
 
     @Override
     public void register(IRegistrar registration) {
         registration.registerBlockDataProvider(CardboardBoxProvider.INSTANCE, TileEntityCardboardBox.class);
         registration.registerComponentProvider(CardboardBoxProvider.INSTANCE, TooltipPosition.HEAD, BlockCardboardBox.class);
     }
+
 }
