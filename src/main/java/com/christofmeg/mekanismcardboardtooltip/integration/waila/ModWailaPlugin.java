@@ -9,7 +9,7 @@ import mekanism.common.block.BlockCardboardBox;
 import mekanism.common.tile.TileEntityCardboardBox;
 
 @SuppressWarnings("unused")
-@WailaPlugin(MekanismCardboardTooltip.MOD_ID)
+@WailaPlugin(value = MekanismCardboardTooltip.MOD_ID)
 public class ModWailaPlugin implements IWailaPlugin {
 
     @Override

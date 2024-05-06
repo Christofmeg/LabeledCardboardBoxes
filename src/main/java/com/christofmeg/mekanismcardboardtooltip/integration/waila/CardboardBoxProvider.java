@@ -26,6 +26,7 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeSpawnEggItem;
+import net.minecraftforge.fml.ModList;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.List;
@@ -51,12 +52,14 @@ public class CardboardBoxProvider implements IComponentProvider, IServerDataProv
                     if (block != null) {
                         ItemStack stack = new ItemStack(item);
                         RenderableTextComponent itemIcon = WailaUtils.item(stack, 0.5F, 0);
-//                        RenderableTextComponent blockComponent = new RenderableTextComponent(itemIcon, MekanismLang.BLOCK.translateColored(EnumColor.INDIGO, new TranslationTextComponent(location.toString().replace(location.getNamespace() + ":", "")).withStyle(TextFormatting.GRAY)));
 
-                        RenderableTextComponent textComponent = new RenderableTextComponent(new TranslationTextComponent(location.toString().replace(location.getNamespace() + ":", "")).withStyle(TextFormatting.GRAY));
-                        RenderableTextComponent blockComponent = new RenderableTextComponent(itemIcon, textComponent);
-
-                        tooltip.add(blockComponent);
+                        if (ModList.get().isLoaded("jade")) {
+                            RenderableTextComponent textComponent =  WailaUtils.offsetText(new TranslationTextComponent(location.toString().replace(location.getNamespace() + ":", "")).withStyle(TextFormatting.GRAY));
+                            RenderableTextComponent blockComponent = new RenderableTextComponent(itemIcon, textComponent);
+                            tooltip.add(blockComponent);
+                        }  else if (ModList.get().isLoaded("wthit") || ModList.get().isLoaded("waila")) {
+                            tooltip.add(MekanismLang.BLOCK.translateColored(EnumColor.INDIGO, new TranslationTextComponent(location.toString().replace(location.getNamespace() + ":", "")).withStyle(TextFormatting.GRAY)));
+                        }
                     }
                 } else {
                     tooltip.add(MekanismLang.BLOCK.translateColored(EnumColor.INDIGO, new TranslationTextComponent(location.toString().replace(location.getNamespace() + ":", "")).withStyle(TextFormatting.GRAY)));
@@ -72,12 +75,14 @@ public class CardboardBoxProvider implements IComponentProvider, IServerDataProv
                 if (item != null) {
                     ItemStack stack = new ItemStack(item);
                     RenderableTextComponent itemIcon = WailaUtils.item(stack, 0.5F, 0);
-//                    RenderableTextComponent blockComponent = new RenderableTextComponent(itemIcon, MekanismLang.TILE.translateColored(EnumColor.INDIGO, new TranslationTextComponent(location.toString()).withStyle(TextFormatting.GRAY)));
 
-                    RenderableTextComponent textComponent = new RenderableTextComponent(MekanismLang.TILE.translateColored(EnumColor.INDIGO, new TranslationTextComponent(location.toString()).withStyle(TextFormatting.GRAY)));
-                    RenderableTextComponent blockComponent = new RenderableTextComponent(itemIcon, textComponent);
-
-                    tooltip.add(blockComponent);
+                    if (ModList.get().isLoaded("jade")) {
+                        RenderableTextComponent textComponent = WailaUtils.offsetText(MekanismLang.TILE.translateColored(EnumColor.INDIGO, new TranslationTextComponent(location.toString()).withStyle(TextFormatting.GRAY)));
+                        RenderableTextComponent blockComponent = new RenderableTextComponent(itemIcon, textComponent);
+                        tooltip.add(blockComponent);
+                    } else if (ModList.get().isLoaded("wthit") || ModList.get().isLoaded("waila")) {
+                        tooltip.add(MekanismLang.TILE.translateColored(EnumColor.INDIGO, new TranslationTextComponent(location.toString()).withStyle(TextFormatting.GRAY)));
+                    }
                 } else {
                     tooltip.add(MekanismLang.TILE.translateColored(EnumColor.INDIGO, new TranslationTextComponent(location.toString()).withStyle(TextFormatting.GRAY)));
                 }
@@ -96,21 +101,23 @@ public class CardboardBoxProvider implements IComponentProvider, IServerDataProv
                 if (block != null) {
                     ItemStack stack = new ItemStack(item);
                     RenderableTextComponent itemIcon = WailaUtils.item(stack, 0.5F, 0);
-/*
-                    RenderableTextComponent blockComponent = new RenderableTextComponent(itemIcon,
-                            TextComponentUtil.build(EnumColor.INDIGO,
-                                    new TranslationTextComponent("cardboard_box.mekanism.block_entity.spawn_type",
-                                            new TranslationTextComponent(accessor.getServerData().getString("spawnerType").replace(":", ".")).withStyle(TextFormatting.GRAY))
-                            )
-                    );
-*/
 
-                    RenderableTextComponent textComponent = new RenderableTextComponent(TextComponentUtil.build(EnumColor.INDIGO,
-                            new TranslationTextComponent("cardboard_box.mekanism.block_entity.spawn_type",
-                                    new TranslationTextComponent(accessor.getServerData().getString("spawnerType").replace(":", ".")).withStyle(TextFormatting.GRAY))
-                    ));
-                    RenderableTextComponent blockComponent = new RenderableTextComponent(itemIcon, textComponent);
-                    tooltip.add(blockComponent);
+                    if (ModList.get().isLoaded("jade")) {
+                        RenderableTextComponent textComponent =  WailaUtils.offsetText(TextComponentUtil.build(EnumColor.INDIGO,
+                                new TranslationTextComponent("cardboard_box.mekanism.block_entity.spawn_type",
+                                        new TranslationTextComponent(accessor.getServerData().getString("spawnerType").replace(":", ".")).withStyle(TextFormatting.GRAY))
+                        ));
+                        RenderableTextComponent blockComponent = new RenderableTextComponent(itemIcon, textComponent);
+                        tooltip.add(blockComponent);
+                    } else if (ModList.get().isLoaded("wthit") || ModList.get().isLoaded("waila")) {
+                        tooltip.add(
+                                TextComponentUtil.build(EnumColor.INDIGO,
+                                        new TranslationTextComponent("cardboard_box.mekanism.block_entity.spawn_type",
+                                                new TranslationTextComponent(accessor.getServerData().getString("spawnerType").replace(":", ".")).withStyle(TextFormatting.GRAY))
+                                )
+                        );
+                    }
+
                 }
             } else {
                 tooltip.add(
