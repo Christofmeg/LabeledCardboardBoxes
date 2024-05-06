@@ -10,7 +10,7 @@ license="The MIT License (MIT)"
 	#logoFile="icon.png"
 	#credits=""
 	authors="Christofmeg"
-	description="HWYLA/Jade/TOP/WAILA/WTHIT plugin that shows what Block and Block Entity is inside Mekanism Cardboard Boxes."
+	description="Amber/HWYLA/Jade/TOP/WTHIT plugin that shows what Block and Block Entity is inside Mekanism Cardboard Boxes."
 [[dependencies.mekanismcardboardtooltip]]
     modId="forge"
     mandatory=true
@@ -21,18 +21,6 @@ license="The MIT License (MIT)"
     modId="minecraft"
     mandatory=true
     versionRange="[1.16,1.17)"
-    ordering="NONE"
-    side="BOTH"
-[[dependencies.mekanismcardboardtooltip]]
-    modId="jade"
-    mandatory=false
-    versionRange="[2.0.0,)"
-    ordering="NONE"
-    side="BOTH"
-[[dependencies.mekanismcardboardtooltip]]
-    modId="mekanism"
-    mandatory=true
-    versionRange="[10.0,)"
     ordering="NONE"
     side="BOTH"
 [modproperties.mekanismcardboardtooltip]

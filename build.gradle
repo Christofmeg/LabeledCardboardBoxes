@@ -109,8 +109,9 @@ dependencies {
 
     // Only 1 at a time
 //    implementation fg.deobf("curse.maven:jade-324717:3910873")
-    implementation fg.deobf("curse.maven:wthit-forge-455982:3831595")
-//    implementation fg.deobf("curse.maven:hwyla-253449:3033593")
+//    implementation fg.deobf("curse.maven:amber-jade-851652:4873092")
+//    implementation fg.deobf("curse.maven:wthit-forge-455982:3831595")
+    implementation fg.deobf("curse.maven:hwyla-253449:3033593")
 
 }
 
@@ -132,6 +133,7 @@ tasks.register('publishCurseForge', TaskPublishCurseForge) {
         mainFile.addGameVersion("${it}")
     }
     mainFile.addRequirement("mekanism")
+    mainFile.addOptional("amber-jade")
     mainFile.addOptional("jade")
     mainFile.addOptional("the-one-probe")
     mainFile.addOptional("wthit-forge")
@@ -150,6 +152,7 @@ modrinth {
     gameVersions = "${forge_release_versions}".split(",") as List<String>
     dependencies {
         required.project "mekanism"
+        optional.project "amber"
         optional.project "jade"
         optional.project "the-one-probe"
         optional.project "wthit"
