@@ -141,7 +141,7 @@ tasks.register('publishCurseForge', TaskPublishCurseForge) {
         mainFile.addGameVersion("${it}")
     }
     mainFile.addRequirement("mekanism")
-    mainFile.addOptional("jade")
+    mainFile.addOptional("waila")
     mainFile.addOptional("the-one-probe")
 //    mainFile.addOptional("wthit-forge")
     mainFile.addOptional("catalogue")
@@ -158,7 +158,7 @@ modrinth {
     gameVersions = "${forge_release_versions}".split(",") as List<String>
     dependencies {
         required.project "mekanism"
-        optional.project "jade"
+        optional.project "waila"
         optional.project "the-one-probe"
 //        optional.project "wthit"
     }

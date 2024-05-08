@@ -1,4 +1,4 @@
-package com.christofmeg.mekanismcardboardtooltip.integration.jade;
+package com.christofmeg.mekanismcardboardtooltip.integration.waila;
 
 import mcp.mobius.waila.api.BlockAccessor;
 import mcp.mobius.waila.api.IComponentProvider;

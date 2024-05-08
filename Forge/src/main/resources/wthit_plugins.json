@@ -1,6 +1,6 @@
 {
   "mekanismcardboardtooltip:plugin": {
-    "initializer": "com.christofmeg.mekanismcardboardtooltip.integration.wthit.ModWTHITPlugin",
+    "initializer": "com.christofmeg.mekanismcardboardtooltip.integration.waila.ModWailaPlugin",
     "side": "*",
     "required": []
   }
